@@ -1,0 +1,7 @@
+image: /home/yf/arv_ws/src/arv_navigation/maps/map.pgm
+resolution: 0.020000
+origin: [-13.380000, -14.020000, 0.000000]
+negate: 0
+occupied_thresh: 0.65
+free_thresh: 0.196
+

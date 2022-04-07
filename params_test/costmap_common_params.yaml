@@ -1,0 +1,25 @@
+map_type: costmap
+origin_z: 0.0
+z_resolution: 1
+z_voxels: 2
+
+obstacle_range: 2.5 # 设置机器人检测障碍物的最大距离
+raytrace_range: 3.0 # 传感器最大探测距离
+
+publish_voxel_map: false
+transform_tolerance: 0.2
+meter_scoring: true
+
+footprint: [[0.4425, -0.3175], [0.4425, 0.3175], [-0.4425, 0.3175], [-0.4425, -0.3175]]
+footprint_padding: 0.1
+
+plugins:
+- {name: obstacles_layer, type: "costmap_2d::ObstacleLayer"}
+- {name: inflater_layer, type: "costmap_2d::InflationLayer"}
+
+obstacles_layer:
+  observation_sources: scan
+  scan: {sensor_frame: laser_frame, data_type: LaserScan, topic: scan, marking: true, clearing: true, min_obstacle_height: -2.0, max_obstacle_height: 2.0, obstacle_range: 2.5, raytrace_range: 3.0}
+
+inflater_layer:
+ inflation_radius: 0.25 # 这个参数表示机器人路径规划应与机器人保持0.25m以上的安全距离

@@ -1,0 +1,50 @@
+TrajectoryPlannerROS:
+
+  # Robot Configuration Parameters
+  acc_lim_x: 1.0  # X方向最大线加速度单位m/s2。默认2.5m/s2
+  acc_lim_y: 0.0  # 差速轮机器人无Y方向线加速度，取0
+  acc_lim_theta:  1.5 # 最大角加速度，单位rad/s2。默认为3.2rad/s2
+
+  max_vel_x: 0.3  # X方向最大速度
+  min_vel_x: 0.1  # X方向最小速度
+
+  max_vel_y: 0.0  # 差速轮机器人无Y方向速度，取0
+  min_vel_y: 0.0
+
+  max_vel_theta: 1.57  #  最大角速度，单位rad/s，默认1.0rad/s
+  min_vel_theta: -1.57   #  最小角速度，单位rad/s，默认-1.0rad/s
+  min_in_place_vel_theta: 0.314 # 机器人最小原地旋转速度，单位rad/s，默认0.5rad/s
+
+  holonomic_robot: false  # 全向移动机器人使能，对于两轮差速，该值为false
+  escape_vel: -0.5  # 机器人逃离速度，负值
+
+  # Goal Tolerance Parameters
+  yaw_goal_tolerance: 0.157 # 允许机器人缩到目标的方向（弧度）偏差，该值设置小可能导致机器人接近目标振荡。默认为0.1
+  xy_goal_tolerance: 0.25 # 允许机器人所到目标的坐标（以米为单位）偏差，该值过小可能导致机器人在目标位置附近不断调整到精确的目标位置。默认为0.1
+  latch_xy_goal_tolerance: false  # 目标坐标偏差锁存，如果上锁，机器人到达过坐标后只进行简单的方向调整，即使在公差外。默认为false。
+
+  # Forward Simulation Parameters
+  sim_time: 2.0 # 规划时需要考虑未来多长时间，结合dwa
+  sim_granularity: 0.02 # 给定轨迹的步长，默认0.025米
+  angular_sim_granularity: 0.02 # 给定角度轨迹的弧长，默认0.025弧度
+  vx_samples: 6 # x方向速度的样本数，默认为8
+  vtheta_samples: 20  # 角速度的样本数，默认为20
+  controller_frequency: 10.0  # 更新路径规划的频率，建议3~5(y原来为20)
+
+  # Trajectory scoring parameters
+  meter_scoring: true # 以米为单位
+  occdist_scale:  0.1 # 沿障碍物轨迹最大距离系数，控制器应该避开障碍物的的轻易程度，默认0.1
+  goal_distance_bias: 0.75  # 地图单元格的路径距离系数，默认为0.6。决定有多接近路径。
+  gdist_scale: 1.0 # 地图单元格两点距离的系数，默认为0.6。决定有多接近局部目标。
+
+  heading_lookahead: 0.325  # 原地旋转时向前看多少米，默认0.35
+  heading_scoring: false  # 通过机器人航向计算还是通过路径计算距离，默认false
+  heading_scoring_timestep: 0.8   # 航向计算距离时，沿着模拟轨迹向前看的时间，默认0.8
+  dwa: true # 是否使用动态窗口方法（DWA），或者是否使用轨迹。默认为true
+  simple_attractor: false
+  publish_cost_grid_pc: true  # 是否使用cost_grid发布。如果为true，在/cost_cloud话题生成sensor_msgs/PointCloud2
+
+  #Oscillation Prevention Parameters
+  oscillation_reset_dist: 0.05 #  在振荡标志被清零前，机器人必须在出行多远(double, default: 0.05)
+  escape_reset_dist: 0.1
+  escape_reset_theta: 0.1
